@@ -1,6 +1,6 @@
 <?php
 	require_once('include\common.inc.php');
-	if (isset($_GET['identifier']) && !empty($_GET['identifier']))
+	if (isset($_GET['identifier']))
 	{
 		$identifier = $_GET['identifier'];
 		echo checkIdentifier($identifier);
