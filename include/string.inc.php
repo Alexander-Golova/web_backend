@@ -75,3 +75,107 @@
 		}
 		return $answer;
 	}
+	
+	function removeExtraBlanks($str)
+	{
+		$outstr = '';
+		if (strlen($str))
+		{
+			$str = trim($str);
+			for ($i = 0; $i < strlen($str); $i++)
+			{
+				if ($str[$i] != ' ')
+				{
+					$outstr .= $str[$i];
+					$mark = true;
+				}
+				else
+				{
+					if ($mark)
+					{
+						$outstr .= ' ';
+						$mark = false;
+					}
+				}
+			}
+			
+		}
+		return $outstr;		
+	}
+	
+	function passwordStrength($str)
+	{
+		$strength = 0;
+		if (ctype_alnum($str))
+		{
+			$strength += 4 * strlen($str);
+			$strength += 4 * numberDigits($str);
+			$strength += 2 * (strlen($str) - numberUpRegister($str));
+			$strength += 2 * (strlen($str) - numberDownRegister($str));
+			if (ctype_digit($str))
+			{
+				$strength -= strlen($str);
+			}
+			if (ctype_alpha($str))
+			{
+				$strength -= strlen($str);
+			}
+			$strength -= numberRepeatingCharacters($str);
+		}
+		return $strength;
+	}
+	
+	function numberDigits($str)
+	{
+		$count = 0;
+		for ($i = 0; $i < strlen($str); $i++)
+		{
+			if (ctype_digit($str[$i]))
+			{
+				$count++;
+			}
+		}
+		return $count;
+	}
+	
+	function numberUpRegister($str)
+	{
+		$count = 0;
+		for ($i = 0; $i < strlen($str); $i++)
+		{
+			if (ctype_upper($str[$i]))
+			{
+				$count++;
+			}
+		}
+		return $count;
+	}
+	
+	function numberDownRegister($str)
+	{
+		$count = 0;
+		for ($i = 0; $i < strlen($str); $i++)
+		{
+			if (ctype_lower($str[$i]))
+			{
+				$count++;
+			}
+		}
+		return $count;
+	}
+	
+	function numberRepeatingCharacters($str)
+	{
+		$count = 0;
+		foreach(count_chars($str, 1) as $i => $val)
+		{
+			if ($val > 1)
+			{
+				$count += $val;
+			}
+		}
+		return $count;
+	}
+	
+	
+	
